@@ -219,11 +219,25 @@ export default class Player {
       element.innerHTML = `x: ${pos.x.toFixed(2)}<br>y: ${pos.y.toFixed(2)}<br>z: ${pos.z.toFixed(2)}`;
     }
 
+    // SpeedoMeter
     const kmh = Math.abs(this.speed * 3.6)
-    const el = document.getElementById('speedo-value')
-    if (el) el.textContent = Math.round(kmh)
-    const fill = document.getElementById('speedo-fill')
-    if (fill) fill.style.width = `${Math.min(100, (kmh / this.maxSpeed * 3.6) * 100)}%`
+    const maxKmh = this.maxSpeed * 3.6
+    const ratio = Math.min(kmh / maxKmh, 1)
+
+    const textEl = document.getElementById('speedo-text')
+    if (textEl) textEl.textContent = Math.round(kmh)
+    
+    const arc = document.getElementById('speedo-arc')
+    if (arc) {
+      const len = 408.4
+      arc.setAttribute('stroke-dashoffset', len * (1 - ratio))
+    }
+
+    const needle = document.getElementById('speedo-needle')
+    if (needle) {
+      const angle = (ratio * 180) - 90
+      needle.setAttribute('transform', `rotate(${angle}, 150, 170)`)
+    }
 
     // Safety respawn if the car falls off the world
     if (pos.y < -20) {

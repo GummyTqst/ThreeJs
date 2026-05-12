@@ -67,9 +67,21 @@
     </div>
 
     <div id="speedo">
-      <div id="speedo-value">0</div>
-      <div id="speedo-unit">km/h</div>
-      <div id="speedo-bar"><div id="speedo-fill"></div></div>
+      <svg viewBox="0 0 300 190">
+        <path d="M 20 170 A 130 130 0 0 1 280 170" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="6" stroke-linecap="round"/>
+    
+        <path id="speedo-arc" d="M 20 170 A 130 130 0 0 1 280 170" fill="none" stroke="#8cf" stroke-width="6" stroke-linecap="round" stroke-dasharray="408.4" stroke-dashoffset="408.4"/>
+    
+        <g id="speedo-needle">
+          <line x1="150" y1="170" x2="150" y2="58" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+        </g>
+    
+        <circle cx="150" cy="170" r="5" fill="#8cf" stroke="#111" stroke-width="2"/>
+        <circle cx="150" cy="170" r="2" fill="#111"/>
+    
+        <text x="150" y="130" text-anchor="middle" fill="#fff" font-family="monospace" font-size="48" font-weight="300" id="speedo-text">0</text>
+        <text x="150" y="150" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-family="monospace" font-size="20" letter-spacing="3">KM/H</text>
+      </svg>
     </div>
 
     <script type="module" src="/sources/index.js"></script>
