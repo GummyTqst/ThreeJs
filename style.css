@@ -216,3 +216,51 @@ canvas {
     background: #8cf;
     cursor: pointer;
 }
+
+
+/* Speedo Meter */
+#speedo {
+    position: fixed;
+    bottom: 64px;
+    right: 0;
+    left: 0;
+    text-align: center;
+    pointer-events: none;
+    user-select: none;
+    z-index: 999;
+}
+
+#speedo-value {
+    font: 48px/1 monospace;
+    font-weight: 300;
+    color: #fff;
+    letter-spacing: -0.02em;
+}
+
+#speedo-unit {
+    font: 11px monospace;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 2px;
+}
+
+#speedo-bar {
+    width: 140px;
+    height: 2px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 2px;
+    margin-top: 8px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+}
+
+#speedo-fill {
+    height: 100%;
+    width: 0%;
+    background: #8cf;
+    border-radius: 2px;
+    transition: width 0.05s linear;
+}
+  

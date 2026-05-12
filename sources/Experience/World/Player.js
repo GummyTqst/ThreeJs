@@ -147,6 +147,7 @@ export default class Player {
     // Speed along the car's local forward axis (0, 0, -1)
     const forward = new THREE.Vector3(0, 0, -1).applyQuaternion(this.mesh.quaternion)
     const speed   = forward.dot(new THREE.Vector3(vel.x, vel.y, vel.z))
+    this.speed = speed
 
     // Reset
     if (keys.reset) {
@@ -217,6 +218,12 @@ export default class Player {
     if (element) {
       element.innerHTML = `x: ${pos.x.toFixed(2)}<br>y: ${pos.y.toFixed(2)}<br>z: ${pos.z.toFixed(2)}`;
     }
+
+    const kmh = Math.abs(this.speed * 3.6)
+    const el = document.getElementById('speedo-value')
+    if (el) el.textContent = Math.round(kmh)
+    const fill = document.getElementById('speedo-fill')
+    if (fill) fill.style.width = `${Math.min(100, (kmh / this.maxSpeed * 3.6) * 100)}%`
 
     // Safety respawn if the car falls off the world
     if (pos.y < -20) {
