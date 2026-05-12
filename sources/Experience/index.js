@@ -4,6 +4,7 @@ import Camera from './Camera.js'
 import World from './World/index.js'
 import Inputs from './Inputs.js'
 import Physics from './Physics.js'
+import Settings from './Settings.js'
 
 export default class Experience {
   constructor(canvas) {
@@ -31,6 +32,7 @@ export default class Experience {
     this.inputs = new Inputs()
     this.renderer = new Renderer(this)
     this.camera = new Camera(this)
+    this.settings = new Settings(this)
 
     // Physics is async (Rapier uses WASM)
     this.physics = new Physics(this)
