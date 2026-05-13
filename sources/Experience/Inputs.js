@@ -17,7 +17,7 @@ export default class Inputs {
     switch (event.code) {
       case 'KeyW':      case 'ArrowUp':    this.keys.forward   = isDown; break
       case 'KeyS':      case 'ArrowDown':  this.keys.backward  = isDown; break
-      case 'KeyA':      case 'ArrowLeft':  this.keys.left      = isDown; break
+      case 'KeyA':      case 'ArrowLeft':  this.keys.left     = isDown; break
       case 'KeyD':      case 'ArrowRight': this.keys.right     = isDown; break
       case 'Space':                        this.keys.brake      = isDown; break
       case 'KeyR':                          this.keys.reset      = isDown; break
