@@ -109,6 +109,12 @@ canvas {
     transition: background 0.2s;
 }
 
+#settings-toggle svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
 #settings-toggle:hover {
     background: rgba(255, 255, 255, 0.2);
 }
@@ -221,20 +227,22 @@ canvas {
 /* Speedo Meter */
 #speedo {
     position: fixed;
-    bottom: 20px;
+    bottom: 10px;
     left: 50%;
     right: 50%;
     transform: translateX(-50%);
-    width: 160px;
+    width: 240px;
     pointer-events: none;
     user-select: none;
     z-index: 999;
-    opacity: 0.85;
+    opacity: 0.9;
+    background: none;
 }
 
 #speedo svg {
     display: block;
     width: 100%;
     height: auto;
-    filter: drop-shadow(0 0 12px rgba(136, 204, 255, 0.08));
+    filter: drop-shadow(0 0 20px rgba(136, 204, 255, 0.1));
+    background: none;
 }

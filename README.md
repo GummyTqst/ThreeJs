@@ -1,4 +1,4 @@
-# Mini Folio — Three.js + Rapier
+# Three JS School prototype
 
 A minimal 3D driving world inspired by Bruno Simon's folio-2025.
 
@@ -8,27 +8,6 @@ A minimal 3D driving world inspired by Bruno Simon's folio-2025.
 - **Vite** — dev server / bundler
 
 ---
-
-## Setup
-
-### 1. Install dependencies
-```bash
-npm install
-```
-
-### 2. Get Bruno's terrain (optional but recommended)
-1. Clone Bruno's repo: `git clone https://github.com/brunosimon/folio-2025`
-2. Find `terrain.glb` inside his `static/` folder
-3. Copy it to **your** `static/models/terrain.glb`
-
-> If you skip this step, a procedural hilly terrain is used as a fallback — the car still drives on it!
-
-### 3. Run the dev server
-```bash
-npm run dev
-```
-
-Open `http://localhost:5173` in your browser.
 
 ---
 
@@ -42,30 +21,6 @@ Open `http://localhost:5173` in your browser.
 | Space | Brake |
 
 ---
-
-## File structure
-```
-mini-folio/
-├── index.html                          ← Entry HTML + loading screen
-├── vite.config.js                      ← Vite config (handles Rapier WASM)
-├── package.json
-├── static/
-│   └── models/
-│       └── terrain.glb                 ← ← ← PUT BRUNO'S TERRAIN HERE
-└── sources/
-    ├── index.js                        ← Boots the Experience
-    └── Experience/
-        ├── index.js                    ← Main orchestrator + game loop
-        ├── Renderer.js                 ← Three.js WebGL renderer
-        ├── Camera.js                   ← Follow camera (like Bruno's View.js)
-        ├── Inputs.js                   ← Keyboard input tracker
-        ├── Physics.js                  ← Rapier world + helpers
-        └── World/
-            ├── index.js               ← Lighting + assembles the world
-            ├── Floor.js               ← Flat ground plane + physics collider
-            ├── Terrain.js             ← Loads terrain.glb + builds trimesh collider
-            └── Player.js             ← Car mesh + physics body + input forces
-```
 
 ---
 

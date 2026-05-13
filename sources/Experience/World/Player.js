@@ -227,16 +227,17 @@ export default class Player {
     const textEl = document.getElementById('speedo-text')
     if (textEl) textEl.textContent = Math.round(kmh)
     
-    const arc = document.getElementById('speedo-arc')
+    const arc = document.getElementById('meter-bg-bar')
     if (arc) {
-      const len = 408.4
+      const len = arc.getTotalLength()
+      arc.setAttribute('stroke-dasharray', len)
       arc.setAttribute('stroke-dashoffset', len * (1 - ratio))
     }
 
     const needle = document.getElementById('speedo-needle')
     if (needle) {
-      const angle = (ratio * 180) - 90
-      needle.setAttribute('transform', `rotate(${angle}, 150, 170)`)
+      const angle = 120 - ratio * -120 
+      needle.setAttribute('transform', `rotate(${angle * 2}, 173.5, 173.5)`)
     }
 
     // Safety respawn if the car falls off the world
