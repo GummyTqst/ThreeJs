@@ -23,6 +23,16 @@ export default class Settings {
         this.panel.querySelectorAll('[data-preset]').forEach((btn) => {
             btn.addEventListener('click', () => this._applyPreset(btn.dataset.preset))
         })
+
+        const transToggle = document.getElementById('transMode')
+        if (transToggle) {
+            transToggle.addEventListener('change', () => {
+                const player = this.experience.world.player
+                player.isAuto = transToggle.checked
+                document.getElementById('mode-label').textContent = transToggle.checked ? 'Automatic' : 'Manual'
+                if (!transToggle.checked) player.currentGear = 1
+            })
+        }
     }
 
     toggle() {
@@ -41,23 +51,26 @@ export default class Settings {
 
         switch (id) {
             case 'engineForce':
-              this.experience.world.player.engineForce = value
-              break
+                this.experience.world.player.engineForce = value
+                break
             case 'steerTorque':
-              this.experience.world.player.steerTorque = value
-              break
+                this.experience.world.player.steerTorque = value
+                break
             case 'brakeForce':
-              this.experience.world.player.brakeForce = value
-              break
+                this.experience.world.player.brakeForce = value
+                break
             case 'maxSpeed':
-              this.experience.world.player.maxSpeed = value
-              break
+                this.experience.world.player.maxSpeed = value
+                break
             case 'camDist':
-              this.experience.camera.offset.z = value
-              break
+                this.experience.camera.offset.z = value
+                break
             case 'camLerp':
-              this.experience.camera.lerpFactor = value
-            break
+                this.experience.camera.lerpFactor = value
+                break
+            case 'shiftRpm':
+                this.experience.world.player.shiftRpm = value
+                break
         }
     }
 

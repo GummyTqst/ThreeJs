@@ -6,7 +6,9 @@ export default class Inputs {
       left: false,      // A or ArrowLeft
       right: false,     // D or ArrowRight
       brake: false,      // Space
-      reset: false       // R
+      reset: false,       // R
+      shiftUp: false,     // Q
+      shiftDown: false    // E
     }
 
     window.addEventListener('keydown', (e) => this._onKey(e, true))
@@ -21,6 +23,8 @@ export default class Inputs {
       case 'KeyD':      case 'ArrowRight': this.keys.right     = isDown; break
       case 'Space':                        this.keys.brake      = isDown; break
       case 'KeyR':                          this.keys.reset      = isDown; break
+      case 'KeyQ':                          this.keys.shiftUp    = isDown; break
+      case 'KeyE':                          this.keys.shiftDown  = isDown; break
     }
   }
 }

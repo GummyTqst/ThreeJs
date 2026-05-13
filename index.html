@@ -14,7 +14,7 @@
       </div>
     </div>
 
-    <div id="hud">WASD / Arrow Keys to drive &nbsp;·&nbsp; Space to brake &nbsp;·&nbsp; R to reset</div>
+    <div id="hud">WASD to drive &nbsp;·&nbsp; Space to brake &nbsp;·&nbsp; Q/E shift &nbsp;·&nbsp; R reset</div>
 
     <div id="cords">X: 0.00 <br>Y: 0.00 <br>Z: 0.00</div>
 
@@ -26,6 +26,24 @@
       <div id="settings-header">
         <h2>Car Settings</h2>
         <button id="settings-close">X</button>
+      </div>
+
+      <div class="toggle-group">
+        <label>
+          <span>Transmission</span>
+          <span class="toggle">
+            <input type="checkbox" id="transMode" checked>
+            <span class="slidert"></span>
+          </span>
+        </label>
+        <div class="toggle-labels">
+          <span id="mode-label">Automatic</span>
+        </div>
+      </div>
+      
+      <div class="slider-group">
+        <label>Shift RPM <span id="val-shiftRpm">6000</span></label>
+        <input type="range" id="shiftRpm" min="3000" max="7500" value="6000" step="100">
       </div>
 
       <div class="presets">
@@ -78,6 +96,11 @@
     
         <!-- Speed text -->
         <text x="173.5" y="160" text-anchor="middle" fill="#fff" font-family="monospace" font-size="40" font-weight="300" id="speedo-text">0</text>
+
+        <text x="173.5" y="193" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-family="monospace" font-size="14" font-weight="600" id="gear-text">N</text>
+
+        <rect x="123.5" y="100" width="100" height="5" rx="1.5" fill="rgba(255,255,255,0.06)"/>
+        <rect x="123.5" y="100" width="0" height="5" rx="1.5" fill="#8cf" id="rpm-bar"/>
     
         <!-- Needle -->
         <g id="speedo-needle">

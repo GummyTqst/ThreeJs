@@ -15,6 +15,15 @@ export default class Player {
     this.brakeForce  = 40     // space bar braking
     this.maxSpeed    = 20     // m/s cap
 
+    // Gears
+    this.gearRatios = [3.5, 2.2, 1.5, 1.1, 0.8]   // simple 5-speed gearbox
+    this.currentGear = 1
+    this.isAuto = true
+    this.rpm = 0
+    this.shiftRpm = 6000
+    this.idleRpm = 1200
+
+
     // Wheel nodes — populated after GLB loads
     this.wheels = []
 
@@ -160,26 +169,59 @@ export default class Player {
     }
 
 
+    // Gear shifting
+    if (this.isAuto) {
+      if (speed > 0.5 && this.currentGear === 0) this.currentGear = 1
+      if (speed < 0.3 && this.currentGear !== 1) {
+        if (this.currentGear > 1 && speed < 0.3) this.currentGear = 1
+        if (this.currentGear === 0) this.currentGear = 1
+      }
+      if (this.currentGear >= 1 && this.currentGear < 5) {
+        const gearRatio = this.gearRatios[this.currentGear - 1]
+        this.rpm = (Math.abs(speed) / (this.maxSpeed / gearRatio)) * 6500
+        if (this.rpm > this.shiftRpm && keys.forward) this.currentGear++
+        if (this.rpm < this.idleRpm && this.currentGear > 1 && Math.abs(speed) > 0.1) this.currentGear--
+      }
+    } else {
+      if (keys.shiftUp && this.currentGear < 5) {
+        this.currentGear++
+        keys.shiftUp = false
+      }
+      if (keys.shiftDown && this.currentGear > 0) {
+        this.currentGear--
+        keys.shiftDown = false
+      }
+      if (this.currentGear >= 1) {
+        const gearRatio = this.gearRatios[this.currentGear - 1]
+        this.rpm = (Math.abs(speed) / (this.maxSpeed / gearRatio)) * 6500
+      } else {
+        this.rpm = 0
+      }
+    }
+
     // ── Acceleration / braking ──
+    const effectiveRatio = this.currentGear >= 1 ? this.gearRatios[this.currentGear - 1] : 0
+    const gearMaxSpeed = effectiveRatio > 0 ? this.maxSpeed / effectiveRatio : this.maxSpeed
+
     if (keys.brake) {
       this.body.applyImpulse({
         x: -vel.x * this.brakeForce * delta,
         y: 0,
         z: -vel.z * this.brakeForce * delta
       }, true)
-
-    } else if (keys.forward && Math.abs(speed) < this.maxSpeed) {
+    
+    } else if (keys.forward && this.currentGear > 0 && Math.abs(speed) < gearMaxSpeed) {
       this.body.applyImpulse({
-        x: forward.x * this.engineForce * delta,
+        x: forward.x * this.engineForce * effectiveRatio * delta,
         y: 0,
-        z: forward.z * this.engineForce * delta
+        z: forward.z * this.engineForce * effectiveRatio * delta
       }, true)
-
-    } else if (keys.backward && Math.abs(speed) < this.maxSpeed) {
+    
+    } else if (keys.backward && Math.abs(speed) < this.maxSpeed * 0.5) {
       this.body.applyImpulse({
-        x: -forward.x * this.engineForce * delta,
+        x: -forward.x * this.engineForce * 0.5 * delta,
         y: 0,
-        z: -forward.z * this.engineForce * delta
+        z: -forward.z * this.engineForce * 0.5 * delta
       }, true)
     }
 
@@ -195,8 +237,7 @@ export default class Player {
       }
     }
 
-    // ── Spin the GLB wheel nodes ──
-    // Wheels rotate around their local X axis (they lie on their side in the GLB)
+    // ── Spin wheels
     const spinAmount = speed * 2 * delta
     this.wheels.forEach((wheel) => {
       wheel.rotateX(spinAmount)
@@ -239,6 +280,19 @@ export default class Player {
       const angle = 120 - ratio * -120 
       needle.setAttribute('transform', `rotate(${angle * 2}, 173.5, 173.5)`)
     }
+
+    const gearEl = document.getElementById('gear-text')
+    if (gearEl) {
+      if (this.currentGear === 0) gearEl.textContent = 'N'
+      else gearEl.textContent = this.currentGear
+    }
+
+    const rpmEl = document.getElementById('rpm-bar')
+    if (rpmEl) {
+      const pct = Math.min(this.rpm / 7000, 1) * 100
+      rpmEl.setAttribute('width', pct)
+    }
+
 
     // Safety respawn if the car falls off the world
     if (pos.y < -20) {
