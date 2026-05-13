@@ -151,6 +151,11 @@ canvas {
 #settings-close {
     cursor: pointer;
     opacity: 0.5;
+    outline: none;
+    border: none;
+    background: none;
+    color: white;
+    font-size: 16px;
 }
 
 #settings-close:hover {
@@ -229,23 +234,19 @@ canvas {
     position: fixed;
     bottom: 10px;
     left: 50%;
-    right: 50%;
     transform: translateX(-50%);
-    width: 240px;
+    width: 260px;
     pointer-events: none;
     user-select: none;
     z-index: 999;
-    opacity: 0.9;
-    background: none;
-}
-
-#speedo svg {
+    opacity: 0.92;
+  }
+  #speedo svg {
     display: block;
     width: 100%;
     height: auto;
-    filter: drop-shadow(0 0 20px rgba(136, 204, 255, 0.1));
-    background: none;
-}
+    filter: drop-shadow(0 0 24px rgba(74, 222, 128, 0.06));
+  }
 
 
 

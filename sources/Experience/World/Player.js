@@ -178,7 +178,7 @@ export default class Player {
       }
       if (this.currentGear >= 1 && this.currentGear < 5) {
         const gearRatio = this.gearRatios[this.currentGear - 1]
-        this.rpm = (Math.abs(speed) / (this.maxSpeed / gearRatio)) * 6500
+        this.rpm = (Math.abs(speed) / (this.maxSpeed / gearRatio)) * 8000
         if (this.rpm > this.shiftRpm && keys.forward) this.currentGear++
         if (this.rpm < this.idleRpm && this.currentGear > 1 && Math.abs(speed) > 0.1) this.currentGear--
       }
@@ -193,7 +193,7 @@ export default class Player {
       }
       if (this.currentGear >= 1) {
         const gearRatio = this.gearRatios[this.currentGear - 1]
-        this.rpm = (Math.abs(speed) / (this.maxSpeed / gearRatio)) * 6500
+        this.rpm = (Math.abs(speed) / (this.maxSpeed / gearRatio)) * 8000
       } else {
         this.rpm = 0
       }
@@ -260,25 +260,40 @@ export default class Player {
       element.innerHTML = `x: ${pos.x.toFixed(2)}<br>y: ${pos.y.toFixed(2)}<br>z: ${pos.z.toFixed(2)}`;
     }
 
-    // SpeedoMeter
-    const kmh = Math.abs(this.speed * 3.6)
-    const maxKmh = this.maxSpeed * 3.6
-    const ratio = Math.min(kmh / maxKmh, 1)
+    // Tachometer
+    const maxRpm = 8000
+    const rpm = Math.min(this.rpm, maxRpm)
+    const ratio = rpm / maxRpm
 
-    const textEl = document.getElementById('speedo-text')
-    if (textEl) textEl.textContent = Math.round(kmh)
-    
-    const arc = document.getElementById('meter-bg-bar')
-    if (arc) {
-      const len = arc.getTotalLength()
-      arc.setAttribute('stroke-dasharray', len)
+    const arc = document.getElementById('rpm-arc')
+    const red = document.getElementById('rpm-red')
+    if (arc && red) {
+      const len = 471.24
       arc.setAttribute('stroke-dashoffset', len * (1 - ratio))
+
+      if (rpm > 6000) {
+        const redRatio = (rpm - 6000) / 2000
+        red.setAttribute('stroke-dashoffset', len * (1 - redRatio))
+        red.setAttribute('opacity', '1')
+        arc.setAttribute('stroke', '#fbbf24')
+      } else if (rpm > 5000) {
+        red.setAttribute('opacity', '0')
+        arc.setAttribute('stroke', '#4ade80')
+      } else {
+        red.setAttribute('opacity', '0')
+        arc.setAttribute('stroke', '#4ade80')
+      }
     }
 
-    const needle = document.getElementById('speedo-needle')
+    const needle = document.getElementById('rpm-needle')
     if (needle) {
-      const angle = 120 - ratio * -120 
-      needle.setAttribute('transform', `rotate(${angle * 2}, 173.5, 173.5)`)
+      const angle = ratio * 160 - 80
+      needle.setAttribute('transform', `rotate(${angle}, 180, 231)`)
+    }
+
+    const speedEl = document.getElementById('speedo-text')
+    if (speedEl) {
+      speedEl.textContent = Math.round(Math.abs(this.speed * 3.6))
     }
 
     const gearEl = document.getElementById('gear-text')
