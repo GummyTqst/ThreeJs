@@ -15,7 +15,7 @@ export default class Terrain {
     const bar = document.getElementById('loading-bar')
 
     loader.load(
-      '/static/models/Town.glb',
+      '/models/Town.glb',
 
       // Success
       (gltf) => {

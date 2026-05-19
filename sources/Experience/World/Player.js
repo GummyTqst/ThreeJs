@@ -50,7 +50,7 @@ export default class Player {
     const loader = new GLTFLoader()
 
     loader.load(
-      '/static/models/Car.glb',
+      '/models/Car.glb',
 
       (gltf) => {
         console.log('Car.glb loaded')
