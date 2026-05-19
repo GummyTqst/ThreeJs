@@ -17,7 +17,7 @@ export default class Terrain {
     loader.load(
       '/static/models/Town.glb',
 
-      // ✅ Success
+      // Success
       (gltf) => {
         console.log('Town GLB loaded')
         if (bar) bar.style.width = '100%'
@@ -35,7 +35,7 @@ export default class Terrain {
         this.scene.add(gltf.scene)
       },
 
-      // 📦 Progress
+      // Progress
       (xhr) => {
         if (bar && xhr.total > 0) {
           const pct = 60 + (xhr.loaded / xhr.total) * 35
