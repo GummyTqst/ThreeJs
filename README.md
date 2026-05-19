@@ -4,7 +4,7 @@ A minimal 3D driving world inspired by Bruno Simon's folio-2025.
 
 ## Stack
 - **Three.js** — 3D rendering
-- **Rapier** — physics engine (same as Bruno's, uses WASM)
+- **Rapier** — physics engine
 - **Vite** — dev server / bundler
 
 ---
